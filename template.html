@@ -212,7 +212,6 @@ footer{margin-top:22px;font-size:12px;color:var(--faint);display:flex;justify-co
 
   <footer>
     <span>Inspired by the walk-props method of u/CSmith20001 — an imitation, not the original.</span>
-    <span id="built">—</span>
   </footer>
 </div>
 
@@ -293,7 +292,7 @@ function card(r){
   </div>`;
 }
 function render(){
-  $("#slate").textContent=DATA.date;$("#built").textContent="built "+DATA.built;
+  $("#slate").textContent=DATA.date;
   let list=DATA.rows.filter(r=>FILTER==="all"||isPlay(r));
   $("#count").textContent=list.length+(FILTER==="value"?" model plays":" starters")+" · "+DATA.date;
   if(SORT==="model")list.sort((a,b)=>P(b,"1.5")-P(a,"1.5"));
