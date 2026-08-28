@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -28,6 +28,18 @@
   --bet:#2fd693; --bet-soft:#12241d; --thin:#e0b24a; --thin-soft:#241f11;
   --pass:#6b7889; --pass-soft:#1a222e; --fade:#f07a76; --fade-soft:#241615;
   --shadow:0 1px 2px #0004, 0 6px 20px #0006;
+}
+:root[data-theme="light"]{
+  --bg:#f4f6f9; --surface:#ffffff; --surface2:#f9fafc; --sunk:#f1f4f8;
+  --ink:#0e1626; --ink2:#3a4658; --muted:#6b7789; --faint:#9aa5b5;
+  --border:#e7ebf1; --border2:#eef2f6;
+  --brand:#0e9f6e; --brand-dim:#0a7d54; --brand-soft:#e6f6ef;
+  --bet:#0e9f6e; --bet-soft:#e6f6ef; --thin:#b7791a; --thin-soft:#fbf3e2;
+  --pass:#8a96a6; --pass-soft:#f0f3f7; --fade:#d9534f; --fade-soft:#fbecec;
+  --disp:"Plus Jakarta Sans",system-ui,sans-serif;
+  --body:"Inter",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --shadow:0 1px 2px #0e162608, 0 4px 16px #0e16260a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -213,7 +225,9 @@ const $=s=>document.querySelector(s);
 let SIDE="over",FILTER="value",SORT="model";
 let PRICES={},LINEPICK={};
 try{PRICES=JSON.parse(localStorage.getItem("wl_p_"+DATA.date)||"{}");}catch(e){}
-try{const t=localStorage.getItem("wl_theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}
+try{const t=localStorage.getItem("wl_theme");
+  if(t==="light")document.documentElement.removeAttribute("data-theme"),document.documentElement.dataset.theme="light";
+  else if(t==="dark"||t===null||t==="")document.documentElement.dataset.theme="dark";}catch(e){}
 
 const amer=p=>(!p||p<=0||p>=1)?"—":(p>=0.5?"-"+Math.round(100*p/(1-p)):"+"+Math.round(100*(1-p)/p));
 const dec=p=>(p&&p>0&&p<1)?(1/p).toFixed(2):"—";
@@ -324,8 +338,10 @@ $("#sideSeg").addEventListener("click",e=>{if(e.target.dataset.side){SIDE=e.targ
 $("#filtSeg").addEventListener("click",e=>{if(e.target.dataset.f){FILTER=e.target.dataset.f;
   [...e.currentTarget.children].forEach(b=>b.classList.toggle("on",b===e.target));render();}});
 $("#sort").addEventListener("change",e=>{SORT=e.target.value;render();});
-$("#theme").addEventListener("click",()=>{const d=document.documentElement;const now=d.dataset.theme==="dark"?"":"dark";
-  if(now)d.dataset.theme=now;else d.removeAttribute("data-theme");try{localStorage.setItem("wl_theme",now);}catch(e){}});
+$("#theme").addEventListener("click",()=>{const d=document.documentElement;
+  const goingLight=d.dataset.theme==="dark";
+  d.dataset.theme=goingLight?"light":"dark";
+  try{localStorage.setItem("wl_theme",goingLight?"light":"dark");}catch(e){}});
 // feedback submit
 (function(){
   const f=document.getElementById("fbform"); if(!f) return;
