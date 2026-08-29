@@ -180,7 +180,9 @@ footer{margin-top:22px;font-size:12px;color:var(--faint);display:flex;justify-co
   </div><!-- /view-board -->
 
   <div id="view-results" style="display:none">
-    <p class="intro">A new model — no live betting record yet. To see whether it holds up, it was <b>backtested</b>: replayed over two full past seasons of games it had already happened.</p>
+    <p class="intro">Two records below: what the model has called since it started posting (small, real, growing), and the backtest over two past seasons (big, for context). A call = the model 60%+ on a side.</p>
+
+    <div id="livewrap"></div>
 
     <div class="btbox">
       <h3>How the test was done</h3>
@@ -378,6 +380,19 @@ $("#theme").addEventListener("click",()=>{const d=document.documentElement;
 })();
 function renderResults(){
   const S=(HISTORY&&HISTORY.seasons)||{};
+  const days=(HISTORY&&HISTORY.days)||[];
+  const tw=days.reduce((a,d)=>a+d.w,0), tl=days.reduce((a,d)=>a+d.l,0);
+  document.getElementById("livewrap").innerHTML = days.length ? (
+    `<div class="section-h">Since posting — ${tw}-${tl}</div>`+
+    days.map(d=>{
+      const pls=d.plays.map(p=>`<div class="dplay"><span class="res ${p.result==='W'?'w':'l'}">${p.result==='W'?'✓':'✕'}</span>
+        <span class="pn">${p.pitcher}</span><span class="sd">${p.side} ${p.line}</span>
+        <span class="bb">${p.bb!=null?p.bb+' BB':''}</span></div>`).join("");
+      return `<div class="day"><div class="dayh"><span class="dt">${d.date}</span>
+        <span class="rec"><span class="w">${d.w}</span>-<span class="l">${d.l}</span></span></div>
+        <div class="dplays">${pls}</div></div>`;
+    }).join("")+`<p class="note">Small sample — the model expects roughly 2 in 3, so short runs swing a lot either way.</p>`
+  ) : "";
   const y26=S["2026"], y25=S["2025"];
   const gradedTotal=(y26?y26.starts:0)+(y25?y25.starts:0);
   const callTotal=(y26?y26.calls:0)+(y25?y25.calls:0);

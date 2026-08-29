@@ -35,7 +35,14 @@ def main():
     for yr, path in ((2026, "backtest.json"), (2025, "backtest_2025.json")):
         try: out[str(yr)] = season(load(f"{ENGINE}/{path}"))
         except Exception: pass
-    json.dump({"seasons": out}, open("history.json", "w"), indent=2)
+    try:
+        ledger = json.load(open("plays_log.json"))["days"]
+        for d in ledger:
+            d["w"] = sum(1 for p in d["plays"] if p["result"] == "W")
+            d["l"] = sum(1 for p in d["plays"] if p["result"] == "L")
+    except Exception:
+        ledger = []
+    json.dump({"seasons": out, "days": ledger}, open("history.json", "w"), indent=2)
     for yr, s in out.items():
         print(f"  {yr}: {s['starts']} starts, {s['calls']} calls, {s['w']}-{s['l']} ({s['hit']}%)")
 

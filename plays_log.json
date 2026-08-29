@@ -1,0 +1,14 @@
+{
+  "days": [
+    {"date":"2026-08-28","note":"model calls (60%+ on a side)","plays":[
+      {"pitcher":"David Peterson","side":"over","line":"1.5","result":"W","bb":3},
+      {"pitcher":"Eury Pérez","side":"over","line":"1.5","result":"W","bb":4},
+      {"pitcher":"Casey Mize","side":"under","line":"1.5","result":"W","bb":1},
+      {"pitcher":"Dylan Cease","side":"over","line":"1.5","result":"L","bb":1},
+      {"pitcher":"Hunter Brown","side":"over","line":"1.5","result":"L","bb":1},
+      {"pitcher":"Grant Holmes","side":"over","line":"1.5","result":"L","bb":1},
+      {"pitcher":"Reid Detmers","side":"over","line":"1.5","result":"L","bb":0},
+      {"pitcher":"Rhett Lowder","side":"over","line":"1.5","result":"L","bb":0}
+    ]}
+  ]
+}
