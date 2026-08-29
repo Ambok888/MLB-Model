@@ -406,6 +406,7 @@ function renderResults(){
   if(y25) html+=card("2025",y25,"a season the model had never seen");
   document.getElementById("rhead").innerHTML=html;
   document.getElementById("btnote").textContent="2026 is the season the model was built on, so 2025 — which it never saw — is the fairer test. These are backtest results, not real bets.";
+  document.querySelectorAll(".dayh").forEach(el=>el.addEventListener("click",()=>el.closest(".day").classList.toggle("open")));
 }
 document.getElementById("tabs").addEventListener("click",e=>{
   if(!e.target.dataset.tab)return;
