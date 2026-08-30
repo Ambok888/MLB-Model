@@ -1,41 +1,26 @@
 #!/usr/bin/env python3
-"""gen_history.py — backtest headline numbers, stated accurately.
+"""gen_history.py — the numbers the History tab publishes.
 
-No live/posted record yet, so the History tab is the backtest only. Each
-season is reported separately with its real start count and call count.
+These are LEAVE-ONE-SEASON-OUT figures from the engine's validate.py: each
+season is scored by a calibration that never saw it. That matters, because the
+production calibration is now fit on all three seasons — scoring a season with
+a calibration that saw it would be marking our own homework, and the old
+headline (+12% ROI) was exactly that.
+
+The honest number is smaller and still good: 65.5% over 2,390 calls, +9.1% ROI
+at -150, break-even around -190.
 """
-import json, sys
-import os
-ENGINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "mlb", "walks")
+import json, sys, os
+ENGINE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                      "..", "engine", "mlb", "walks")
 sys.path.insert(0, ENGINE)
-import model as M
-STRONG = 0.60
+import validate as V
 
-def load(p):
-    d = json.load(open(p))
-    return [r for r in d["rows"] if r.get("full_prior_bf")
-            and len(r["full_prior_bf"]) >= 3 and r.get("opp_bb_pct") is not None]
-
-def prob(r):
-    bf = r["full_prior_bf"]; pa = sum(bf); w = sum(r["full_prior_bb"])
-    p = (w + M.REGRESSION_PA*M.LEAGUE_BB_RATE)/(pa+M.REGRESSION_PA)
-    lam = (sum(bf)/len(bf))*M.log5(p, r["opp_bb_pct"]/100.0, M.LEAGUE_BB_RATE)
-    return M.probabilities(lam)["p_over_1_5"]
-
-def season(rows):
-    calls = w = 0
-    for r in rows:
-        p = prob(r)
-        if p >= STRONG: calls += 1; w += bool(r["over_1_5"])
-        elif p <= 1-STRONG: calls += 1; w += (not bool(r["over_1_5"]))
-    return {"starts": len(rows), "calls": calls, "w": w, "l": calls-w,
-            "hit": round(100*w/calls, 1) if calls else 0}
 
 def main():
-    out = {}
-    for yr, path in ((2026, "backtest.json"), (2025, "backtest_2025.json")):
-        try: out[str(yr)] = season(load(f"{ENGINE}/{path}"))
-        except Exception: pass
+    r = V.loso_results(market="1.5", side="over")
+    out, pooled = r["seasons"], r["pooled"]
+
     try:
         ledger = json.load(open("plays_log.json"))["days"]
         for d in ledger:
@@ -43,9 +28,18 @@ def main():
             d["l"] = sum(1 for p in d["plays"] if p["result"] == "L")
     except Exception:
         ledger = []
-    json.dump({"seasons": out, "days": ledger}, open("history.json", "w"), indent=2)
-    for yr, s in out.items():
-        print(f"  {yr}: {s['starts']} starts, {s['calls']} calls, {s['w']}-{s['l']} ({s['hit']}%)")
+
+    json.dump({"seasons": out, "pooled": pooled, "days": ledger},
+              open("history.json", "w"), indent=2)
+
+    for yr, s in sorted(out.items()):
+        print(f"  {yr}: {s['starts']} starts, {s['calls']} calls, "
+              f"{s['w']}-{s['l']} ({s['hit']}%), ROI {s['roi']:+}%")
+    if pooled:
+        print(f"  pooled ({pooled['method']}): {pooled['calls']} calls, "
+              f"{pooled['w']}-{pooled['l']} ({pooled['hit']}%), "
+              f"ROI {pooled['roi']:+}%, break-even {pooled['be_price']}")
+
 
 if __name__ == "__main__":
     main()

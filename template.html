@@ -180,7 +180,7 @@ footer{margin-top:22px;font-size:12px;color:var(--faint);display:flex;justify-co
   </div><!-- /view-board -->
 
   <div id="view-results" style="display:none">
-    <p class="intro">Two records below: what the model has called since it started posting (small, real, growing), and the backtest over two past seasons (big, for context). A call = the model 60%+ on a side.</p>
+    <p class="intro">Two records below: what the model has called since it started posting (small, real, growing), and the backtest over three past seasons (big, for context). A call = the model 60%+ on a side.</p>
 
     <div id="livewrap"></div>
 
@@ -202,7 +202,7 @@ footer{margin-top:22px;font-size:12px;color:var(--faint);display:flex;justify-co
     <h2>How it works</h2>
     <p>Walks come down to two things: how many batters a pitcher faces, and how often he walks one. The model estimates <b>expected walks = batters faced × walk rate</b>, blended with how patient the opposing lineup has been. A wild arm against a patient lineup is the sweet spot.</p>
     <p>It outputs a real probability, so it compares straight to a price. Enter what your book offers — if the payout beats the <b>fair</b> price, the model sees value. Probability is driven by walk rate, batters faced and opponent patience; zone% and first-pitch strike% are context.</p>
-    <p><b>How it was tested.</b> Before running live, the model was backtested — checked against games already played. For every past start it used only the stats known before that game, worked out a probability, then compared it to what actually happened. See the <b>History</b> tab for the results across two seasons.</p>
+    <p><b>How it was tested.</b> Before running live, the model was backtested — checked against games already played. For every past start it used only the stats known before that game, worked out a probability, then compared it to what actually happened. See the <b>History</b> tab for the results across three seasons.</p>
   </div>
 
   <div class="fb">
@@ -393,19 +393,27 @@ function renderResults(){
         <div class="dplays">${pls}</div></div>`;
     }).join("")+`<p class="note">Small sample — the model expects roughly 2 in 3, so short runs swing a lot either way.</p>`
   ) : "";
-  const y26=S["2026"], y25=S["2025"];
-  const gradedTotal=(y26?y26.starts:0)+(y25?y25.starts:0);
-  const callTotal=(y26?y26.calls:0)+(y25?y25.calls:0);
+  const yrs=Object.keys(S).sort();
+  const P=(HISTORY&&HISTORY.pooled)||null;
+  const gradedTotal=yrs.reduce((a,y)=>a+(S[y].starts||0),0);
+  const callTotal=yrs.reduce((a,y)=>a+(S[y].calls||0),0);
   document.getElementById("btspan").innerHTML=
-    "Two seasons — 2025 and 2026 — <b>"+gradedTotal.toLocaleString()+"</b> starts graded in all, "+
-    callTotal.toLocaleString()+" of them confident calls:";
+    yrs.length+" seasons — "+yrs.join(", ")+" — <b>"+gradedTotal.toLocaleString()+
+    "</b> starts graded in all, "+callTotal.toLocaleString()+" of them confident calls:";
   const card=(yr,s,note)=>`<div class="s"><div class="n">${s.hit}<small>%</small></div>
     <div class="l">${yr} · ${s.w}-${s.l} on ${s.calls.toLocaleString()} calls${note?"<br><span style=\'color:var(--brand)\'>"+note+"</span>":""}</div></div>`;
   let html="";
-  if(y26) html+=card("2026",y26,"");
-  if(y25) html+=card("2025",y25,"a season the model had never seen");
+  yrs.forEach(y=>{ html+=card(y,S[y],""); });
+  if(P) html+=card("all three",P,"the number that counts");
   document.getElementById("rhead").innerHTML=html;
-  document.getElementById("btnote").textContent="2026 is the season the model was built on, so 2025 — which it never saw — is the fairer test. These are backtest results, not real bets.";
+  document.getElementById("btnote").textContent=
+    P ? ("Every season above is scored by a calibration fitted on the OTHER seasons only, "+
+         "so no season marks its own homework. Combined: "+P.w+"-"+P.l+" on "+
+         P.calls.toLocaleString()+" calls ("+P.hit+"%), "+
+         (P.roi>0?"+":"")+P.roi+"% return at -150, break-even around "+P.be_price+
+         ". 2025 was the weak season at 62% — flat stretches are normal. "+
+         "These are backtest results, not real bets.")
+      : "Backtest results, not real bets.";
   document.querySelectorAll(".dayh").forEach(el=>el.addEventListener("click",()=>el.closest(".day").classList.toggle("open")));
 }
 document.getElementById("tabs").addEventListener("click",e=>{
