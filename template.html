@@ -159,13 +159,13 @@ footer{margin-top:22px;font-size:12px;color:var(--faint);display:flex;justify-co
   <div class="tabs" id="tabs"><button data-tab="board" class="on">Today's board</button><button data-tab="results">History</button></div>
 
   <div id="view-board">
-  <p class="intro">Every starter's chance of going over (or under) his walk line — both the 1.5 and 2.5 line shown, with the fair price and the data behind it. <b>Enter your book's odds</b> on a card to see if there's value.</p>
+  <p class="intro">Every starter's chance of going over (or under) his walk line — both the 1.5 and 2.5 line shown, with the fair price and the data behind it. <b>Enter your book's odds</b> on a card to see if there's value. Start times are in your own timezone.</p>
 
   <div class="controls">
     <div class="seg" id="sideSeg"><button data-side="over" class="on">Over</button><button data-side="under">Under</button></div>
     <div class="seg" id="filtSeg"><button data-f="value" class="on">Plays</button><button data-f="all">All</button></div>
     <div class="selwrap"><label>sort</label>
-      <select id="sort"><option value="model">Model %</option><option value="edge">Best value</option><option value="name">Name</option></select></div>
+      <select id="sort"><option value="model">Model %</option><option value="time">Starts first</option><option value="edge">Best value (needs your odds)</option><option value="name">Name</option></select></div>
   </div>
 
   <div class="legend">
@@ -173,6 +173,7 @@ footer{margin-top:22px;font-size:12px;color:var(--faint);display:flex;justify-co
     <span class="lg"><span class="sw" style="background:var(--thin)"></span> LEAN — 56–60%</span>
   </div>
   <p class="count" id="count">—</p>
+  <p class="count" id="sortnote" style="color:var(--thin)"></p>
 
   <div class="grid" id="grid"></div>
   <div id="exwrap"></div>
@@ -273,7 +274,7 @@ function card(r){
   return `<div class="card side-${SIDE}" data-nm="${r.pitcher}">
     <div class="chead">
       <div class="crow1">
-        <div class="who"><div class="nm">${r.pitcher}</div><div class="vs">vs ${r.opp}${r.throws?" · "+r.throws+"HP":""}</div></div>
+        <div class="who"><div class="nm">${r.pitcher}</div><div class="vs">vs ${r.opp}${r.throws?" · "+r.throws+"HP":""}${startTime(r.gt)}</div></div>
         <span class="tier ${tc}">${tl}</span>
       </div>
       <div class="lines2">${lineRow(r,"1.5")}${lineRow(r,"2.5")}</div>
@@ -304,16 +305,33 @@ function card(r){
     </div>
   </div>`;
 }
+function startTime(gt){
+  // Shown in the READER's own timezone. From Australia these US games land
+  // overnight, so am/pm is forced — "3:35" alone is genuinely ambiguous when
+  // every game on the slate is in the small hours.
+  if(!gt) return "";
+  const d=new Date(gt);
+  if(isNaN(d)) return "";
+  const t=d.toLocaleTimeString([],{hour:"numeric",minute:"2-digit",hour12:true})
+           .replace(/\s?([ap])\.?m\.?/i,(m,x)=>x.toLowerCase()+"m");
+  return " · "+t;
+}
 function render(){
   $("#slate").textContent=DATA.date;
   let list=DATA.rows.filter(r=>FILTER==="all"||isPlay(r));
   $("#count").textContent=list.length+(FILTER==="value"?" model plays":" starters")+" · "+DATA.date;
   if(SORT==="model")list.sort((a,b)=>P(b,"1.5")-P(a,"1.5"));
+  else if(SORT==="time")list.sort((a,b)=>String(a.gt||"~").localeCompare(String(b.gt||"~")));
   else if(SORT==="name")list.sort((a,b)=>a.pitcher.localeCompare(b.pitcher));
   else if(SORT==="edge")list.sort((a,b)=>{
     const eb=(l=>verdict(P(b,l),parseFloat((PRICES[b.pitcher]||{})[l]))[2]??-9)(LINEPICK[b.pitcher]||"1.5");
     const ea=(l=>verdict(P(a,l),parseFloat((PRICES[a.pitcher]||{})[l]))[2]??-9)(LINEPICK[a.pitcher]||"1.5");
     return eb-ea;});
+  const anyPrice=Object.values(PRICES).some(o=>o&&Object.values(o).some(v=>v));
+  const sn=$("#sortnote");
+  if(sn) sn.textContent = (SORT==="edge"&&!anyPrice)
+    ? "Enter your book's odds on a card — until then there is nothing to rank value by, so this stays in model order."
+    : "";
   $("#grid").innerHTML=list.map(card).join("");
   const ex=DATA.excluded||[];
   $("#exwrap").innerHTML=ex.length?`<div class="section-h">Excluded — not enough recent data</div><div class="exlist">`+
