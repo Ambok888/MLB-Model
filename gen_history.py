@@ -5,7 +5,8 @@ No live/posted record yet, so the History tab is the backtest only. Each
 season is reported separately with its real start count and call count.
 """
 import json, sys
-ENGINE = "/home/nal/mytool/walks-board/mlb/walks"
+import os
+ENGINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "mlb", "walks")
 sys.path.insert(0, ENGINE)
 import model as M
 STRONG = 0.60

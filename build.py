@@ -6,10 +6,11 @@ Only PICKS + supporting data go in — no model code, no backtests. Run daily.
 
   python3 build.py /path/to/walks_board.json
 """
+import os
 import json, sys, datetime as dt, html
 
 SRC = sys.argv[1] if len(sys.argv) > 1 else \
-    "../mytool/walks-board/mlb/walks/walks_board.json"
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "mlb", "walks", "walks_board.json")
 
 
 def slim(e):

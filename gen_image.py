@@ -6,10 +6,11 @@ it with headless Chrome. Post the PNG where links aren't allowed.
 
   python3 gen_image.py /path/to/walks_board.json
 """
+import os
 import json, sys, subprocess, os, datetime as dt
 
 SRC = sys.argv[1] if len(sys.argv) > 1 else \
-    "/home/nal/mytool/walks-board/mlb/walks/walks_board.json"
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "mlb", "walks", "walks_board.json")
 
 
 TEAMS={"Arizona Diamondbacks":"ARI","Athletics":"ATH","Atlanta Braves":"ATL",
