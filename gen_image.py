@@ -31,12 +31,26 @@ def main():
     date = b["date"]
     rows = [e for e in b["board"] if e.get("ranked") and e.get("model")
             and not e["model"].get("error")]
-    overs = sorted([e for e in rows if e["model"]["p_over_1_5"] >= 0.60],
-                   key=lambda e: -e["model"]["p_over_1_5"])
-    unders = sorted([e for e in rows if 1-e["model"]["p_over_1_5"] >= 0.60],
-                    key=lambda e: -(1-e["model"]["p_over_1_5"]))
+    # Every call goes on the card, tagged. Showing only the 60%+ overs is how
+    # the published record and the image drifted apart before — the image is
+    # what gets posted, so it has to be the whole board.
+    CALL, LEAN = 0.60, 0.56
 
-    def line(e, side):
+    def pick(side):
+        out = []
+        for e in rows:
+            p = e["model"]["p_over_1_5"]
+            q = p if side == "over" else 1 - p
+            if q >= CALL:
+                out.append((e, "STRONG", q))
+            elif q >= LEAN:
+                out.append((e, "LEAN", q))
+        return sorted(out, key=lambda x: (x[1] != "STRONG", -x[2]))
+
+    overs, unders = pick("over"), pick("under")
+
+    def line(item, side):
+        e, tier, _q = item
         m = e["model"]; mm = e.get("mechanism") or {}; sr = e.get("season_rates") or {}
         p = e.get("pillars") or {}
         if side == "over":
@@ -54,7 +68,8 @@ def main():
                 f"<span class='d'>WHIP <b>{mm.get('whip')}</b></span>")
         return f"""<div class="r">
           <div class="top">
-            <div class="nm">{e['pitcher']}<span class="op">vs {opp}</span></div>
+            <div class="nm">{e['pitcher']}<span class="op">vs {opp}</span>
+              <span class="tier {tier.lower()}">{tier}</span></div>
             <div class="ln"><span class="lb">{tag} 1.5</span><b>{round(p15*100)}%</b><i>{dec(p15)}</i></div>
             <div class="ln"><span class="lb">{tag} 2.5</span><b>{round(p25*100)}%</b><i>{dec(p25)}</i></div>
           </div>
@@ -63,9 +78,9 @@ def main():
 
     body = ""
     if overs:
-        body += '<div class="grp">Overs the model likes</div>' + "".join(line(e,"over") for e in overs)
+        body += '<div class="grp">Overs</div>' + "".join(line(x,"over") for x in overs)
     if unders:
-        body += '<div class="grp">Unders</div>' + "".join(line(e,"under") for e in unders)
+        body += '<div class="grp">Unders</div>' + "".join(line(x,"under") for x in unders)
 
     html = f"""<!doctype html><html><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,6 +107,10 @@ body{{width:880px;background:#0d1219;color:#eaeef4;
   border-radius:4px;padding:2px 0;margin-left:2px;font-weight:600}}
 .pip.cl{{background:#12241d;color:#2fd693}}
 .nm{{font-weight:700;font-size:17px}}
+.tier{{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:700;
+  letter-spacing:.05em;padding:3px 7px;border-radius:5px;margin-left:9px;vertical-align:2px}}
+.tier.strong{{background:#12241d;color:#2fd693}}
+.tier.lean{{background:#2a2119;color:#e0a458}}
 .op{{font-family:"JetBrains Mono",monospace;font-size:12px;color:#8b97a7;margin-left:8px;font-weight:500}}
 .ln{{text-align:right;font-family:"JetBrains Mono",monospace}}
 .ln .lb{{display:block;font-size:9.5px;color:#5e6b7b;letter-spacing:.06em}}
@@ -102,7 +121,8 @@ body{{width:880px;background:#0d1219;color:#eaeef4;
 </style></head><body>
   <div class="head"><span class="logo">walk<span>·</span>line</span>
     <span class="date">{date}</span></div>
-  <div class="sub">Model % that a starter goes over (or under) his walk line, with the fair decimal price. Take a line only if your book pays more than the fair number.</div>
+  <div class="sub">Model % that a starter goes over (or under) his walk line, with the fair decimal price. Take a line only if your book pays more than the fair number.<br>
+    <b style="color:#2fd693">STRONG</b> = model 60%+ &nbsp;·&nbsp; <b style="color:#e0a458">LEAN</b> = 56-60%. At -150 you need 60% just to break even, so a lean is not a bet at that price.</div>
   {body}
   <div class="foot"><b>Still testing — not betting advice.</b> Numbers from MLB's free data. Full tool + history: walkline (Ambok888/MLB-Model on GitHub Pages).</div>
 </body></html>"""
