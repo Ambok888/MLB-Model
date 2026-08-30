@@ -41,6 +41,13 @@
           "bb": 3
         },
         {
+          "pitcher": "Blake Snell",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 3
+        },
+        {
           "pitcher": "Jos\u00e9 Soriano",
           "side": "over",
           "line": "1.5",
@@ -69,7 +76,7 @@
           "bb": 1
         }
       ],
-      "w": 5,
+      "w": 6,
       "l": 2
     },
     {

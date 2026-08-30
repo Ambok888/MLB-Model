@@ -297,7 +297,7 @@ function card(r){
         <div class="dc"><div class="k">1st strike%</div><div class="v">${r.fstrike??"—"}%</div></div>
         <div class="dc"><div class="k">Pitches/PA</div><div class="v">${r.ppa??"—"}</div></div>
         <div class="dc"><div class="k">WHIP</div><div class="v">${r.whip??"—"}</div></div>
-        <div class="dc"><div class="k">Sample</div><div class="v">${r.starts??"—"}<small> st</small></div></div>
+        <div class="dc"><div class="k">History used</div><div class="v">${r.starts??"—"}<small> starts</small></div></div>
       </div>
       ${r.reads&&r.reads.length?`<div class="reads">${r.reads.map(x=>`<span class="read">${x}</span>`).join("")}</div>`:""}
       ${(r.bullpen||r.chase)?`<div class="ctx">${r.bullpen?`bullpen — <b>${r.bullpen}</b><br>`:""}${r.chase?`opp chase — <b>${r.chase}</b>`:""}</div>`:""}
