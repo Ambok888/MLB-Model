@@ -1,14 +1,120 @@
 {
   "days": [
-    {"date":"2026-08-28","note":"model calls (60%+ on a side)","plays":[
-      {"pitcher":"David Peterson","side":"over","line":"1.5","result":"W","bb":3},
-      {"pitcher":"Eury Pérez","side":"over","line":"1.5","result":"W","bb":4},
-      {"pitcher":"Casey Mize","side":"under","line":"1.5","result":"W","bb":1},
-      {"pitcher":"Dylan Cease","side":"over","line":"1.5","result":"L","bb":1},
-      {"pitcher":"Hunter Brown","side":"over","line":"1.5","result":"L","bb":1},
-      {"pitcher":"Grant Holmes","side":"over","line":"1.5","result":"L","bb":1},
-      {"pitcher":"Reid Detmers","side":"over","line":"1.5","result":"L","bb":0},
-      {"pitcher":"Rhett Lowder","side":"over","line":"1.5","result":"L","bb":0}
-    ]}
+    {
+      "date": "2026-08-29",
+      "plays": [
+        {
+          "pitcher": "Ryan Johnson",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 5
+        },
+        {
+          "pitcher": "Merrill Kelly",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 4
+        },
+        {
+          "pitcher": "Nolan McLean",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Jos\u00e9 Soriano",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Andrew Abbott",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Carlos Rod\u00f3n",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Max Fried",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        }
+      ]
+    },
+    {
+      "date": "2026-08-28",
+      "note": "model calls (60%+ on a side)",
+      "plays": [
+        {
+          "pitcher": "David Peterson",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Eury P\u00e9rez",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 4
+        },
+        {
+          "pitcher": "Casey Mize",
+          "side": "under",
+          "line": "1.5",
+          "result": "W",
+          "bb": 1
+        },
+        {
+          "pitcher": "Dylan Cease",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Hunter Brown",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Grant Holmes",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Reid Detmers",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 0
+        },
+        {
+          "pitcher": "Rhett Lowder",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 0
+        }
+      ]
+    }
   ]
 }

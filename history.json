@@ -17,6 +17,62 @@
   },
   "days": [
     {
+      "date": "2026-08-29",
+      "plays": [
+        {
+          "pitcher": "Ryan Johnson",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 5
+        },
+        {
+          "pitcher": "Merrill Kelly",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 4
+        },
+        {
+          "pitcher": "Nolan McLean",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Jos\u00e9 Soriano",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Andrew Abbott",
+          "side": "over",
+          "line": "1.5",
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Carlos Rod\u00f3n",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Max Fried",
+          "side": "over",
+          "line": "1.5",
+          "result": "L",
+          "bb": 1
+        }
+      ],
+      "w": 5,
+      "l": 2
+    },
+    {
       "date": "2026-08-28",
       "note": "model calls (60%+ on a side)",
       "plays": [
