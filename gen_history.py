@@ -26,6 +26,15 @@ def main():
         for d in ledger:
             d["w"] = sum(1 for p in d["plays"] if p["result"] == "W")
             d["l"] = sum(1 for p in d["plays"] if p["result"] == "L")
+            # STRONG (60%+) and LEAN (56-60%) are kept apart on purpose. At -150
+            # you need 60% just to break even, so a lean is not a bet at that
+            # price — merging them would flatter or drag the record depending on
+            # which way the leans ran, and neither is honest.
+            for t in ("STRONG", "LEAN"):
+                sel = [p for p in d["plays"] if p.get("tier") == t]
+                d[t.lower()] = {
+                    "w": sum(1 for p in sel if p["result"] == "W"),
+                    "l": sum(1 for p in sel if p["result"] == "L")}
     except Exception:
         ledger = []
 

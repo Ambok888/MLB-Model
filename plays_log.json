@@ -2,39 +2,23 @@
   "days": [
     {
       "date": "2026-08-29",
+      "note": "every call the site published that day; STRONG = 60%+, LEAN = 56-60%",
       "plays": [
         {
-          "pitcher": "Ryan Johnson",
+          "pitcher": "Carlos Rod\u00f3n",
           "side": "over",
           "line": "1.5",
-          "result": "W",
-          "bb": 5
-        },
-        {
-          "pitcher": "Merrill Kelly",
-          "side": "over",
-          "line": "1.5",
-          "result": "W",
-          "bb": 4
-        },
-        {
-          "pitcher": "Nolan McLean",
-          "side": "over",
-          "line": "1.5",
-          "result": "W",
-          "bb": 3
-        },
-        {
-          "pitcher": "Blake Snell",
-          "side": "over",
-          "line": "1.5",
-          "result": "W",
-          "bb": 3
+          "tier": "STRONG",
+          "p": 0.729,
+          "result": "L",
+          "bb": 1
         },
         {
           "pitcher": "Jos\u00e9 Soriano",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.7,
           "result": "W",
           "bb": 2
         },
@@ -42,61 +26,140 @@
           "pitcher": "Andrew Abbott",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.689,
           "result": "W",
           "bb": 2
         },
         {
-          "pitcher": "Carlos Rod\u00f3n",
+          "pitcher": "Ryan Johnson",
           "side": "over",
           "line": "1.5",
-          "result": "L",
-          "bb": 1
+          "tier": "STRONG",
+          "p": 0.651,
+          "result": "W",
+          "bb": 5
+        },
+        {
+          "pitcher": "Nolan McLean",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.645,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Merrill Kelly",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.639,
+          "result": "W",
+          "bb": 4
         },
         {
           "pitcher": "Max Fried",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.621,
           "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Shane Drohan",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.613,
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Blake Snell",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.599,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Jack Perkins",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.586,
+          "result": "W",
+          "bb": 4
+        },
+        {
+          "pitcher": "Mitch Bratt",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.585,
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Jake Bennett",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.581,
+          "result": "W",
+          "bb": 0
+        },
+        {
+          "pitcher": "Nick Martinez",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.576,
+          "result": "W",
+          "bb": 0
+        },
+        {
+          "pitcher": "Cristopher S\u00e1nchez",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.564,
+          "result": "W",
           "bb": 1
         }
       ]
     },
     {
       "date": "2026-08-28",
-      "note": "model calls (60%+ on a side)",
+      "note": "every call the site published that day; STRONG = 60%+, LEAN = 56-60%",
       "plays": [
-        {
-          "pitcher": "David Peterson",
-          "side": "over",
-          "line": "1.5",
-          "result": "W",
-          "bb": 3
-        },
-        {
-          "pitcher": "Eury P\u00e9rez",
-          "side": "over",
-          "line": "1.5",
-          "result": "W",
-          "bb": 4
-        },
-        {
-          "pitcher": "Casey Mize",
-          "side": "under",
-          "line": "1.5",
-          "result": "W",
-          "bb": 1
-        },
         {
           "pitcher": "Dylan Cease",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.707,
           "result": "L",
           "bb": 1
+        },
+        {
+          "pitcher": "David Peterson",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.695,
+          "result": "W",
+          "bb": 3
         },
         {
           "pitcher": "Hunter Brown",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.677,
           "result": "L",
           "bb": 1
         },
@@ -104,6 +167,8 @@
           "pitcher": "Grant Holmes",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.648,
           "result": "L",
           "bb": 1
         },
@@ -111,15 +176,73 @@
           "pitcher": "Reid Detmers",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.637,
           "result": "L",
           "bb": 0
+        },
+        {
+          "pitcher": "Eury P\u00e9rez",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.63,
+          "result": "W",
+          "bb": 4
         },
         {
           "pitcher": "Rhett Lowder",
           "side": "over",
           "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.604,
           "result": "L",
           "bb": 0
+        },
+        {
+          "pitcher": "Patrick Sandoval",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.594,
+          "result": "W",
+          "bb": 4
+        },
+        {
+          "pitcher": "Christian Scott",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.594,
+          "result": "W",
+          "bb": 5
+        },
+        {
+          "pitcher": "Dean Kremer",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.593,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Blade Tidwell",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.589,
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Casey Mize",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.588,
+          "result": "W",
+          "bb": 1
         }
       ]
     }

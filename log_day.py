@@ -22,7 +22,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ENGINE = os.path.join(HERE, "..", "engine", "mlb", "walks")
 LOG = os.path.join(HERE, "plays_log.json")
 API = "https://statsapi.mlb.com/api/v1"
-CALL = 0.60          # a "call" = model >=60% on a side (matches gen_history)
+CALL = 0.60          # STRONG: model >= 60% on a side
+LEAN = 0.56          # LEAN:   56-60%. Logged too, tagged, counted separately.
 
 
 def get(url):
@@ -50,7 +51,14 @@ def actual_bb(date):
 
 
 def calls_for(date, allow_reconstructed=False):
-    """The model's calls from the archived board: (pitcher, side, prob)."""
+    """Every call on the archived board: (pitcher, side, prob, tier).
+
+    Both tiers are recorded so the published history is the WHOLE board and
+    nothing can be quietly dropped — that is how Shane Drohan (a 61% call that
+    lost) went missing from 8/29 while Blake Snell (a lean that won) stayed in.
+    They are tagged and counted separately, never merged: at -150 you need 60%
+    just to break even, so a lean is not a bet at that price.
+    """
     path = os.path.join(ENGINE, f"{date}.json")
     if not os.path.exists(path):
         raise SystemExit(f"No archived board {path}.\n"
@@ -71,10 +79,15 @@ def calls_for(date, allow_reconstructed=False):
         if not r.get("ranked") or p is None:
             continue
         if p >= CALL:
-            out.append((r["pitcher"], "over", p))
+            out.append((r["pitcher"], "over", p, "STRONG"))
+        elif p >= LEAN:
+            out.append((r["pitcher"], "over", p, "LEAN"))
         elif p <= 1 - CALL:
-            out.append((r["pitcher"], "under", p))
-    out.sort(key=lambda x: -x[2])
+            out.append((r["pitcher"], "under", p, "STRONG"))
+        elif p <= 1 - LEAN:
+            out.append((r["pitcher"], "under", p, "LEAN"))
+    out.sort(key=lambda x: (x[3] != "STRONG",
+                            -(x[2] if x[1] == "over" else 1 - x[2])))
     return out
 
 
@@ -90,16 +103,17 @@ def main():
     real = actual_bb(a.date)
 
     plays, missing = [], []
-    for name, side, p in calls:
+    for name, side, p, tier in calls:
         bb = real.get(name)
         if bb is None:
             missing.append(name)          # didn't start / postponed
             continue
         won = (bb > 1.5) if side == "over" else (bb < 1.5)
         plays.append(collections.OrderedDict(
-            [("pitcher", name), ("side", side), ("line", "1.5"),
+            [("pitcher", name), ("side", side), ("line", "1.5"), ("tier", tier),
+             ("p", round(p if side == "over" else 1 - p, 3)),
              ("result", "W" if won else "L"), ("bb", bb)]))
-    plays.sort(key=lambda x: -x["bb"])
+    plays.sort(key=lambda x: (x["tier"] != "STRONG", -x["p"]))
 
     w = sum(1 for x in plays if x["result"] == "W")
     l = len(plays) - w
