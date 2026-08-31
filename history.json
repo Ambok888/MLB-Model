@@ -37,6 +37,103 @@
   },
   "days": [
     {
+      "date": "2026-08-30",
+      "note": "every call the board published that day; STRONG = 60%+, LEAN = 56-60%",
+      "plays": [
+        {
+          "pitcher": "Kumar Rocker",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.674,
+          "result": "W",
+          "bb": 4
+        },
+        {
+          "pitcher": "Zebby Matthews",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.634,
+          "result": "L",
+          "bb": 0
+        },
+        {
+          "pitcher": "Max Scherzer",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.632,
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Chase Burns",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.619,
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Tyler Mahle",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.618,
+          "result": "L",
+          "bb": 0
+        },
+        {
+          "pitcher": "Will Warren",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.59,
+          "result": "L",
+          "bb": 1
+        },
+        {
+          "pitcher": "Robbie Ray",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.578,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Braxton Ashcraft",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.564,
+          "result": "W",
+          "bb": 1
+        },
+        {
+          "pitcher": "Seth Lugo",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.56,
+          "result": "W",
+          "bb": 2
+        }
+      ],
+      "w": 4,
+      "l": 5,
+      "strong": {
+        "w": 1,
+        "l": 4
+      },
+      "lean": {
+        "w": 3,
+        "l": 1
+      }
+    },
+    {
       "date": "2026-08-29",
       "note": "every call the site published that day; STRONG = 60%+, LEAN = 56-60%",
       "plays": [
