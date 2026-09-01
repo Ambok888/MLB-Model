@@ -37,6 +37,139 @@
   },
   "days": [
     {
+      "date": "2026-08-31",
+      "note": "model calls (60%+ on a side)",
+      "plays": [
+        {
+          "pitcher": "Peter Lambert",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.729,
+          "result": "W",
+          "bb": 5
+        },
+        {
+          "pitcher": "Walbert Ure\u00f1a",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.726,
+          "result": "L",
+          "bb": 0
+        },
+        {
+          "pitcher": "Clay Holmes",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.7,
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Gage Jump",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.674,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Taj Bradley",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.662,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Brady Singer",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.626,
+          "result": "L",
+          "bb": 0
+        },
+        {
+          "pitcher": "Robert Stock",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.608,
+          "result": "L",
+          "bb": 0
+        },
+        {
+          "pitcher": "Payton Tolle",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.608,
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Michael King",
+          "side": "over",
+          "line": "1.5",
+          "tier": "STRONG",
+          "p": 0.605,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Tanner Gordon",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.596,
+          "result": "W",
+          "bb": 1
+        },
+        {
+          "pitcher": "Aaron Nola",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.582,
+          "result": "W",
+          "bb": 2
+        },
+        {
+          "pitcher": "Bryce Elder",
+          "side": "over",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.578,
+          "result": "W",
+          "bb": 3
+        },
+        {
+          "pitcher": "Ian Seymour",
+          "side": "under",
+          "line": "1.5",
+          "tier": "LEAN",
+          "p": 0.562,
+          "result": "W",
+          "bb": 0
+        }
+      ],
+      "w": 10,
+      "l": 3,
+      "strong": {
+        "w": 6,
+        "l": 3
+      },
+      "lean": {
+        "w": 4,
+        "l": 0
+      }
+    },
+    {
       "date": "2026-08-30",
       "note": "every call the board published that day; STRONG = 60%+, LEAN = 56-60%",
       "plays": [
